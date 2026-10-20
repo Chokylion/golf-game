@@ -1,0 +1,17 @@
+{
+  "name": "golf-game",
+  "version": "1.0.0",
+  "description": "Real-time multiplayer mini-golf. Share a room code, share the green, and knock\r your friends' balls around. Works on phone and desktop. Also has an offline\r **Solo** mode (9-hole stroke play).",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "private": "true",
+  "devDependencies": {
+    "cannon-es": "^0.20.0"
+  }
+}

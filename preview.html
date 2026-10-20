@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cholf preview</title>
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}#c{width:100vw;height:100vh;display:block}</style>
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script type="module">
+import { initStage, applyTheme, buildCourse, makeBall, chaseCam, tickCourse, Aim } from "./engine3d.js";
+import { COURSES } from "./courses.js";
+const q = new URLSearchParams(location.search);
+const h = Math.min(COURSES.length - 1, Math.max(0, +(q.get("h") || 0)));
+const view = q.get("view") || "chase";
+const c = COURSES[h];
+const stage = initStage(document.getElementById("c"));
+applyTheme(stage, c.theme);
+const course = buildCourse(c); stage.scene.add(course);
+const ball = makeBall(q.get("skin") || "volt"); ball.position.set(c.tee[0], 0.36, c.tee[1]); stage.scene.add(ball);
+const aim = new Aim(stage.scene);
+const ax = c.cup[0] - c.tee[0], az = c.cup[1] - c.tee[1];
+aim.set(c.tee[0], c.tee[1], ax, az, 0.62, true);
+const L = c.bounds[1];
+let t0 = performance.now();
+function loop() {
+  const t = (performance.now() - t0) / 1000;
+  tickCourse(course, t);
+  if (view === "over") { stage.camera.position.set(0.01, L * 0.92, -L * 0.62); stage.camera.lookAt(0, 0, 1.5); }
+  else chaseCam(stage.camera, c.tee[0], c.tee[1], ax, az, 9, 6.6, 1);
+  stage.render();
+  requestAnimationFrame(loop);
+}
+loop();
+setTimeout(() => { window.__ready = true; }, 60);
+</script>
+</body></html>
