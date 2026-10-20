@@ -1,5 +1,6 @@
-// Cholf realtime config. Supabase anon key is public by design (RLS-protected).
+// Cholf realtime config (optional). Leave empty for solo play; fill in your own Supabase project for online rooms.
+// The anon key is public by design (RLS-protected).
 window.CHOLF_CONFIG = {
-  SUPABASE_URL: "https://YOUR-PROJECT.supabase.co",
-  SUPABASE_ANON: "YOUR-SUPABASE-ANON-KEY"
+  SUPABASE_URL: "",
+  SUPABASE_ANON: ""
 };
